@@ -11,6 +11,7 @@ import {
 } from "../service/product.service";
 
 export async function createProductHandler(
+  //params , res and request
   req: Request<{}, {}, CreateProductInput["body"]>,
   res: Response
 ) {
