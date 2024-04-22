@@ -1,3 +1,5 @@
+/** @format */
+
 import jwt from "jsonwebtoken";
 import config from "config";
 
@@ -8,7 +10,7 @@ export function signJwt(object: Object, options?: jwt.SignOptions | undefined) {
   return jwt.sign(object, privateKey, {
     ...(options && options),
     algorithm: "RS256",
-    expiresIn: "1h",
+    // expiresIn: "1h",
   });
 }
 
@@ -21,6 +23,7 @@ export function verifyJwt(token: string) {
       decoded,
     };
   } catch (error: any) {
+    console.log("Error New ", error);
     return {
       valid: false,
       expired: error.message === "jwt expired",

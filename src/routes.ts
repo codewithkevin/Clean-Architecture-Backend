@@ -1,67 +1,24 @@
+/** @format */
+
 import { Express, Request, Response } from "express";
-import { createUserHandler } from "./controller/user.controller";
-import validateResource from "./middleware/validateResource";
-import { createUserSchema } from "./schema/user.schema";
-import {
-  createUserSessionHandler,
-  deleteSessionHandler,
-  getUserSessionsHandler,
-} from "./controller/session.controller";
-import { createSessionSchema } from "./schema/session.schema";
+import sessionRoutes from "./sessions/session.routes";
+import userRoutes from "./user/user.routes";
 import requireUser from "./middleware/requireUser";
-import {
-  createProductSchema,
-  deleteProductSchema,
-  getProductSchema,
-  updateProductSchema,
-} from "./schema/product.schema";
-import {
-  createProductHandler,
-  deleteProductHandler,
-  getProductHandler,
-  updateProductHandler,
-} from "./controller/product.controller";
+import billRoute from "./bill/bill.routes";
+import budgetRoutes from "./budget/budget.routes";
+// import * as httpStatus from "http-status
 
 function routes(app: Express) {
-  app.get("/healthcheck", (req: Request, res: Response) => {
+  app.get("/api/healthcheck", (req: Request, res: Response) => {
     res.sendStatus(200);
   });
+  app.use("/api/sessions", sessionRoutes);
 
-  app.post("/api/users", validateResource(createUserSchema), createUserHandler);
+  app.use("/api/user", userRoutes);
 
-  app.post(
-    "/api/sessions",
-    validateResource(createSessionSchema),
-    createUserSessionHandler
-  );
+  app.use("/api/bill", billRoute);
 
-  app.get("/api/sessions", requireUser, getUserSessionsHandler);
-
-  app.delete("/api/sessions", requireUser, deleteSessionHandler);
-
-  app.post(
-    "/api/products",
-    [requireUser, validateResource(createProductSchema)],
-    createProductHandler
-  );
-
-  app.put(
-    "/api/products/:productId",
-    [requireUser, validateResource(updateProductSchema)],
-    updateProductHandler
-  );
-
-  app.get(
-    "/api/products",
-    validateResource(getProductSchema),
-    getProductHandler
-  );
-
-  app.delete(
-    "/api/products",
-    [requireUser, validateResource(deleteProductSchema)],
-    deleteProductHandler
-  );
+  app.use("/api/budget", requireUser, budgetRoutes);
 }
 
 export default routes;

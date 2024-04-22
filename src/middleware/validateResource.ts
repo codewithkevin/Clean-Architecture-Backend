@@ -1,3 +1,5 @@
+/** @format */
+
 import { Request, Response, NextFunction } from "express";
 import { AnyZodObject } from "zod";
 

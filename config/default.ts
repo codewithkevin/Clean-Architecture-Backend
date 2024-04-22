@@ -1,6 +1,6 @@
 export default {
   port: 1337,
-  dbUri: "mongodb://localhost:27017/advance-backend",
+  dbUri: "mongodb://localhost:27017/campus-coins",
   saltWorkFactor: 10,
   publicKey: `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiTYVyKdrr0Ovzu8m9yAk

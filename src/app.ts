@@ -1,9 +1,12 @@
-import express from "express";
+/** @format */
+
 import config from "config";
-import connect from "./utils/connect";
+import express from "express";
+import { createConnection } from "typeorm";
 import logger from "./utils/logger";
-import routes from "./routes";
+import connectDB from "./utils/connectDB";
 import deserializeUser from "./middleware/deserializeUser";
+import routes from "./routes";
 
 const port = config.get("port") as number;
 
@@ -15,6 +18,6 @@ app.use(deserializeUser);
 
 app.listen(port, () => {
   logger.info(`Server is running on port http://localhost:${port}`);
-  connect();
+  connectDB();
   routes(app);
 });
